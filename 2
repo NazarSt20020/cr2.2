@@ -1,0 +1,115 @@
+using System;
+using static System.Console;
+namespace ConsoleApp1
+{
+    // Зчислення, яке визначає перелік кольорів,
+    // необхідне для використання у класі ColorPoint
+    enum Colors { Black = 0, Green = 1, Yellow = 2, Red = 3, Blue = 4 };
+    // Базовий клас Point
+    class Point
+    {
+        // 1. Внутрішні поля класу - координати x, y
+        private double x, y;
+        // 2. Конструктори класу
+        // 2.1. Конструктор з 2 параметрами - головний конструктор
+        public Point(double x, double y)
+        {
+            this.x = x; this.y = y;
+        }
+        // 2.2. Конструктор без параметрів
+        public Point() : this(0, 0)
+        {
+        }
+        // 3. Властивості доступу до полів X, Y
+        public double X
+        {
+            get { return x; }
+            set { x = value; }
+        }
+        public double Y
+        {
+            get { return y; }
+            set { y = value; }
+        }
+        // 4. Метод LengthOrigin(), який повертає відстань
+        //   від початку координат до точки (x; y)
+        public double LengthOrigin()
+        {
+            // Теорема Піфагора
+            return Math.Sqrt(x * x + y * y);
+        }
+
+        // 5. Метод Print() - виводить значення полів x, y
+        public void Print()
+        {
+            WriteLine($" x = { x}, y = { y}");
+        }
+    }
+    // Успадкований клас ColorPoint
+    class ColorPoint : Point
+    {
+        // 1. Приховане поле - колір точки
+        private Colors color;
+        // 2. Конструктор з 3 параметрами
+        public ColorPoint(double x, double y, Colors color) : base(x, y)
+        {
+            this.color = color;
+        }
+        // 3. Властивість Color
+        public Colors Color
+        {
+            get { return color; }
+            set
+            {
+                if (color>= 0)
+color = value;
+else
+                    color = 0;
+            }
+        }
+        // 4. Метод Print()
+        void Print()
+        {
+            // Виклик методу базового класу
+            base.Print();
+            // Вивести колір
+            Write("color = ");
+            switch (color)
+            {
+                case Colors.Black:
+                    WriteLine("Black ");
+                    break;
+                case Colors.Blue:
+                    WriteLine(" Blue ");
+                    break;
+                case Colors.Green:
+                    WriteLine("Green ");
+                    break;
+                case Colors.Red:
+                    WriteLine(" Red ");
+                    break;
+                case Colors.Yellow:
+
+                    WriteLine("Yellow ");
+                    break;
+            }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Демонстрація роботи класу Point
+            WriteLine("Demo Point:");
+            Point pt = new Point(3, 5);
+            pt.Print();
+            double len = pt.LengthOrigin();
+            WriteLine("LengthOrigin = { 0}" , len);
+
+            // Демонстрація роботи класу ColorPoint
+            WriteLine("Demo ColorPoint");
+            ColorPoint cp = new ColorPoint(1, 3, Colors.Green);
+            cp.Print();
+        }
+    }
+}
